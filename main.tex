@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\title{t-SNE}
+\author{Atlas42 }
+\date{January 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Minimizing loss function of KL-divergence}
+$\begin{aligned}
+C = \textbf{KL}(p_{i} || q_{i})
+&= \sum_i \sum_j p_{j|i} \log  \frac{p_{j|i}}{q_{j|i}} \\
+&= \sum_i \sum_j p_{j|i} \left( \log p_{j|i} - \log q_{j|i} \right) \\
+&= \sum_i \sum_j p_{j|i} \log p_{j|i} - \sum_d p_{j|i} \log q_{j|i} \\
+&= \sum_i \sum_j \frac{exp(- \begin{Vmatrix}
+x_{i} - x_{j}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+x_{i} - x_{k}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})} \log \frac{exp(- \begin{Vmatrix}
+x_{i} - x_{j}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+x_{i} - x_{k}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}\\ 
+& - \sum_i \sum_j \frac{exp(- \begin{Vmatrix}
+x_{i} - x_{j}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+x_{i} - x_{k}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})} \log \frac{exp(- \begin{Vmatrix}
+y_{i} - y_{j}
+\end{Vmatrix}^{2})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+y_{i} - y_{k}
+\end{Vmatrix}^{2})} \\
+\end{aligned}$\\
+\\$\begin{aligned}\\
+\Rightarrow - \frac{\partial{L}}{\partial{y_{i}}} = \sum_i \sum_j \frac{exp(- \begin{Vmatrix}
+x_{i} - x_{j}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+x_{i} - x_{k}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})} (\sum_{k \neq i} 
+\begin{Vmatrix}
+y_{i} - y_{k} 
+\end{Vmatrix}^{2} - 
+\begin{Vmatrix}
+y_{i} - y_{j} 
+\end{Vmatrix}^{2})\\
+\Rightarrow - \sum_i \sum_j \frac{exp(- \begin{Vmatrix}
+x_{i} - x_{j}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}{\sum_{k \neq i} exp(- \begin{Vmatrix}
+x_{i} - x_{k}
+\end{Vmatrix}^{2} / 2\sigma^{2}_{i})}(2\sum_{k \neq i}(y_{i}-y_{k}) - 2(y_{i}-y_{j}))\\
+\Rightarrow - \sum_i \sum_j p_{j|i}(2\sum_{k \neq i}(y_{i}-y_{k}) - 2(y_{i}-y_{j})) = 0\\
+\Rightarrow - 2\sum_i \sum_j p_{j|i}(\sum_{k \neq i}(y_{i}-y_{k}) - (y_{i}-y_{j}))= 0\\
+\Rightarrow  2\sum_i \sum_j p_{j|i}y_{k} - p_{j|i}y_{j} = 0\\
+\Rightarrow y_{k} = y_{j
+\end{aligned}$\\
+
+
+\end{document}
